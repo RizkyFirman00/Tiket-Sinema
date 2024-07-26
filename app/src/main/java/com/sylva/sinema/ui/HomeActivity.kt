@@ -3,6 +3,8 @@ package com.sylva.sinema.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.sylva.sinema.R
 import com.sylva.sinema.databinding.ActivityHomeBinding
 import com.sylva.sinema.utils.Preferences
 
@@ -12,21 +14,25 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.logout.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java)).let {
-                Preferences.logout(this)
-                finish()
-            }
-
+        binding.include.btnToProfile.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
-        Preferences.getUserInfo(this).let {
-            binding.apply {
-                if (it != null) {
-                    userName.text = it.name
-                    userEmail.text = it.email
-                    userPassword.text = it.password
-                    userPhoneNumber.text = it.phoneNumber
+
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.movies -> {
+//                    startActivity(Intent(this, MoviesActivity::class.java))
+                    true
                 }
+                R.id.cinemas -> {
+//                    startActivity(Intent(this, CinemasActivity::class.java))
+                    true
+                }
+                R.id.ticket -> {
+//                    startActivity(Intent(this, TicketActivity::class.java))
+                    true
+                }
+                else -> false
             }
         }
     }

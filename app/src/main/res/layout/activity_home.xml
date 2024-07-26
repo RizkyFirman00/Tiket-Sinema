@@ -7,48 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.HomeActivity">
 
-    <LinearLayout
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_movies" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:backgroundTint="@color/whitish"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/blackish"
+        app:itemTextAppearanceActive="@font/outfit_semibold"
+        app:itemTextAppearanceInactive="@font/outfit_light"
+        app:itemTextColor="@color/blackish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Name" />
-
-        <TextView
-            android:id="@+id/userEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="Email" />
-
-        <TextView
-            android:id="@+id/userPhoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="PhoneNumber" />
-
-        <TextView
-            android:id="@+id/userPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="Password" />
-
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="logout"/>
-    </LinearLayout>
+        app:menu="@menu/menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
