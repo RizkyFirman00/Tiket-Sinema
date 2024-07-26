@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "80958777623",
+    "project_id": "tiketsinema",
+    "storage_bucket": "tiketsinema.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80958777623:android:21924bbd2b0a0ab579ef52",
+        "android_client_info": {
+          "package_name": "com.sylva.sinema"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcdJHMZmBBlxyn4zE2jfo28G3RK-4vNlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

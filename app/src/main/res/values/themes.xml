@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Sinema" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+<!--         <item name="colorPrimary">@color/whitish</item>-->
+    </style>
+
+    <style name="Theme.Sinema" parent="Base.Theme.Sinema"/>
+
+    <style name="Theme.Sinema.pageLogin" parent="Base.Theme.Sinema">
+        <item name="colorPrimary">@color/whitish</item>
+    </style>
+
+    <style name="Theme.Sinema.pageRegister" parent="Base.Theme.Sinema">
+        <item name="colorPrimary">@color/blackish</item>
+    </style>
+</resources>
