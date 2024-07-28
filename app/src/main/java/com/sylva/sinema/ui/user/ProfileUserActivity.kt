@@ -1,4 +1,4 @@
-package com.sylva.sinema.ui
+package com.sylva.sinema.ui.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,9 @@ import com.google.firebase.ktx.Firebase
 import com.sylva.sinema.databinding.ActivityProfileBinding
 import com.sylva.sinema.utils.Preferences
 import com.sylva.sinema.model.User
+import com.sylva.sinema.ui.LoginActivity
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileUserActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private val usersCollection = db.collection("users")
     private val binding by lazy { ActivityProfileBinding.inflate(layoutInflater) }
@@ -61,10 +62,19 @@ class ProfileActivity : AppCompatActivity() {
                         originalData["email"] != email ||
                         originalData["phoneNumber"] != phoneNumber
 
+                val isPasswordChanged = originalData["password"] != password
+
+                if (!isPasswordChanged) {
+                    Toast.makeText(this, "Password tidak boleh sama dengan yang sebelumnya", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
                 if (!isDataChanged) {
                     Toast.makeText(this, "Tidak ada data yang diubah", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
+
+                loadingProgress()
 
                 usersCollection.document(originalData["email"].toString()).get().addOnSuccessListener { documentSnapshot ->
                     if (documentSnapshot.exists()) {
@@ -72,10 +82,8 @@ class ProfileActivity : AppCompatActivity() {
                         if (storedPassword == password) {
                             if (originalData["email"] != email) {
                                 updateUserEmail(originalData["email"].toString(), email, phoneNumber, name, password)
-                                finish()
                             } else {
                                 updateUserData(originalData["email"].toString(), email, phoneNumber, name, password)
-                                finish()
                             }
                         } else {
                             Toast.makeText(this, "Password tidak benar", Toast.LENGTH_SHORT).show()
@@ -84,12 +92,15 @@ class ProfileActivity : AppCompatActivity() {
                 }.addOnFailureListener { exception ->
                     Log.e("ProfileActivity", "Error getting document", exception)
                     Toast.makeText(this, "Gagal memeriksa password", Toast.LENGTH_SHORT).show()
+                }.addOnCompleteListener {
+                    unLoadingProgress()
                 }
             }
         }
     }
 
     private fun getUserData(email: String) {
+        loadingProgress()
         usersCollection.document(email)
             .get()
             .addOnSuccessListener { documentSnapshot ->
@@ -109,6 +120,9 @@ class ProfileActivity : AppCompatActivity() {
             }
             .addOnFailureListener { exception ->
                 Log.e("UserData", "Error getting document", exception)
+            }
+            .addOnCompleteListener {
+                unLoadingProgress()
             }
     }
 
@@ -143,6 +157,9 @@ class ProfileActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Gagal memperbarui data pengguna", Toast.LENGTH_SHORT).show()
                 Log.e("ProfileActivity", "Error updating user data", exception)
+            }
+            .addOnCompleteListener {
+                unLoadingProgress()
             }
     }
 
@@ -179,10 +196,40 @@ class ProfileActivity : AppCompatActivity() {
                         Toast.makeText(this, "Gagal menghapus data pengguna lama", Toast.LENGTH_SHORT).show()
                         Log.e("ProfileActivity", "Error deleting old user data", exception)
                     }
+                    .addOnCompleteListener {
+                        unLoadingProgress()
+                    }
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Gagal memperbarui data pengguna", Toast.LENGTH_SHORT).show()
                 Log.e("ProfileActivity", "Error updating user data", exception)
             }
+            .addOnCompleteListener {
+                unLoadingProgress()
+            }
+    }
+
+    private fun loadingProgress() {
+        binding.apply {
+            progressCircular.visibility = android.view.View.VISIBLE
+            edProfileFullName.isEnabled = false
+            edProfilePhoneNumber.isEnabled = false
+            edProfileEmail.isEnabled = false
+            edProfilePassword.isEnabled = false
+            edProfileConfirmPassword.isEnabled = false
+            btnUpdateData.isEnabled = false
+        }
+    }
+
+    private fun unLoadingProgress() {
+        binding.apply {
+            progressCircular.visibility = android.view.View.GONE
+            edProfileFullName.isEnabled = true
+            edProfilePhoneNumber.isEnabled = true
+            edProfileEmail.isEnabled = true
+            edProfilePassword.isEnabled = true
+            edProfileConfirmPassword.isEnabled = true
+            btnUpdateData.isEnabled = true
+        }
     }
 }

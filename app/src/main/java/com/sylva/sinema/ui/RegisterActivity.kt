@@ -2,7 +2,6 @@ package com.sylva.sinema.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.ktx.firestore
@@ -39,11 +38,11 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Password tidak sama", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
+                    loadingProgress()
                     registerUser(name, phoneNumber, email, password)
                 }
             }
         }
-
     }
 
     private fun registerUser(name: String, phoneNumber: String, email: String, password: String) {
@@ -57,7 +56,8 @@ class RegisterActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val existingUser = task.result?.documents
                 if (!existingUser.isNullOrEmpty()) {
-                    Toast.makeText(this, "Username sudah dipakai", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Email sudah dipakai", Toast.LENGTH_SHORT).show()
+                    unLoadingProgress()
                 } else {
                     usersCollection.document(email).set(user)
                         .addOnCompleteListener { registrationTask ->
@@ -77,33 +77,39 @@ class RegisterActivity : AppCompatActivity() {
                             } else {
                                 Toast.makeText(this, "Registrasi gagal", Toast.LENGTH_SHORT).show()
                             }
+                            unLoadingProgress()
                         }
                 }
             } else {
                 Toast.makeText(this, "Error checking existing user", Toast.LENGTH_SHORT).show()
+                unLoadingProgress()
             }
         }
     }
 
     private fun loadingProgress() {
         binding.apply {
-//            progressBar2.visibility = android.view.View.VISIBLE
+            progressCircular.visibility = android.view.View.VISIBLE
             edRegisterFullName.isEnabled = false
             edRegisterPhoneNumber.isEnabled = false
             edRegisterEmail.isEnabled = false
             edRegisterPassword.isEnabled = false
+            edRegisterConfirmPassword.isEnabled = false
             btnRegister.isEnabled = false
+            btnToLogin.isEnabled = false
         }
     }
 
     private fun unLoadingProgress() {
         binding.apply {
-//            progressBar2.visibility = android.view.View.GONE
+            progressCircular.visibility = android.view.View.GONE
             edRegisterFullName.isEnabled = true
             edRegisterPhoneNumber.isEnabled = true
             edRegisterEmail.isEnabled = true
             edRegisterPassword.isEnabled = true
+            edRegisterConfirmPassword.isEnabled = true
             btnRegister.isEnabled = true
+            btnToLogin.isEnabled = true
         }
     }
 }

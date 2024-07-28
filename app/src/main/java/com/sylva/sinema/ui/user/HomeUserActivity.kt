@@ -1,4 +1,4 @@
-package com.sylva.sinema.ui
+package com.sylva.sinema.ui.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sylva.sinema.R
 import com.sylva.sinema.databinding.ActivityHomeBinding
-import com.sylva.sinema.utils.Preferences
 
-class HomeActivity : AppCompatActivity() {
+class HomeUserActivity : AppCompatActivity() {
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         binding.include.btnToProfile.setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
+            startActivity(Intent(this, ProfileUserActivity::class.java))
         }
 
         BottomNavigationView.OnNavigationItemSelectedListener { item ->

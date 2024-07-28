@@ -13,10 +13,13 @@
         android:theme="@style/Theme.Sinema"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ProfileActivity"
+            android:name=".ui.admin.HomeAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.user.ProfileUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.user.HomeUserActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"

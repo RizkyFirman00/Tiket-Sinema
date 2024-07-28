@@ -9,6 +9,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sylva.sinema.databinding.ActivityLoginBinding
 import com.sylva.sinema.model.User
+import com.sylva.sinema.ui.admin.HomeAdminActivity
+import com.sylva.sinema.ui.user.HomeUserActivity
 import com.sylva.sinema.utils.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,12 +31,12 @@ class LoginActivity : AppCompatActivity() {
 
         val usernameCheck = Preferences.getEmail(this)
         if (Preferences.checkEmail(this) && usernameCheck == "admin") {
-            Intent(this, HomeActivity::class.java).also {
+            Intent(this, HomeUserActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
         } else if (Preferences.checkEmail(this)) {
-            Intent(this, HomeActivity::class.java).also {
+            Intent(this, HomeUserActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
@@ -44,13 +46,15 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
-            if (email == "admin" && password == "admin") {
+            if (email == "sylva" && password == "flowrends") {
+                loadingProgress()
                 Preferences.saveEmail(email, this)
-                Intent(this, HomeActivity::class.java).also {
+                Intent(this, HomeAdminActivity::class.java).also {
                     startActivity(it)
                     finish()
                 }
             } else {
+                loadingProgress()
                 CoroutineScope(Dispatchers.Main).launch {
                     val loginResult = loginUser(email, password)
                     handleLoginResult(loginResult)
@@ -69,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         if (result.first) {
             val username = Preferences.getEmail(this)
             Toast.makeText(this, "Selamat Datang $username", Toast.LENGTH_SHORT).show()
-            Intent(this, HomeActivity::class.java).also {
+            Intent(this, HomeUserActivity::class.java).also {
                 startActivity(it)
                 finish()
             }
@@ -122,19 +126,21 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loadingProgress() {
         binding.apply {
-//            progressBar2.visibility = android.view.View.VISIBLE
+            progressCircular.visibility = android.view.View.VISIBLE
             edLoginEmail.isEnabled = false
             edLoginPassword.isEnabled = false
             btnLogin.isEnabled = false
+            btnToRegister.isEnabled = false
         }
     }
 
     private fun unLoadingProgress() {
         binding.apply {
-//            progressBar2.visibility = android.view.View.GONE
+            progressCircular.visibility = android.view.View.GONE
             edLoginEmail.isEnabled = true
             edLoginPassword.isEnabled = true
             btnLogin.isEnabled = true
+            btnToRegister.isEnabled = true
         }
     }
 }
