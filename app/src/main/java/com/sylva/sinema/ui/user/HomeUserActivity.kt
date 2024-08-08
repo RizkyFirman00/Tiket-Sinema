@@ -15,6 +15,7 @@ class HomeUserActivity : AppCompatActivity() {
 
         binding.include.btnToProfile.setOnClickListener {
             startActivity(Intent(this, ProfileUserActivity::class.java))
+            finish()
         }
 
         BottomNavigationView.OnNavigationItemSelectedListener { item ->

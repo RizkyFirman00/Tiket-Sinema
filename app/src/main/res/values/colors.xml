@@ -6,4 +6,6 @@
     <color name="whitish">#ECECEC</color>
     <color name="blue">#2C62D6</color>
     <color name="black_gray">#1E1E1E</color>
+    <color name="gray">#ECECEC</color>
+    <color name="red">#EA1612</color>
 </resources>

@@ -30,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val usernameCheck = Preferences.getEmail(this)
-        if (Preferences.checkEmail(this) && usernameCheck == "admin") {
-            Intent(this, HomeUserActivity::class.java).also {
+        if (Preferences.checkEmail(this) && usernameCheck == "sylva") {
+            Intent(this, HomeAdminActivity::class.java).also {
                 startActivity(it)
                 finish()
             }

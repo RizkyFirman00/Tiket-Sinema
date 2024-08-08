@@ -4,4 +4,9 @@
         <item name="android:background">@drawable/shape_button_blue</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="Button_Style_red" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/shape_button_red</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

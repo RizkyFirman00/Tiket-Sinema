@@ -7,4 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".ui.admin.HomeAdminActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_home_admin" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/navbar"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/whitish"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/blackish"
+        app:itemTextAppearanceActive="@font/outfit_semibold"
+        app:itemTextAppearanceInactive="@font/outfit_light"
+        app:itemTextColor="@color/blackish"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_admin" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

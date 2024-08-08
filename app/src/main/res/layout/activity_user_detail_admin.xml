@@ -5,66 +5,39 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blackish"
-    tools:context=".ui.RegisterActivity">
+    tools:context=".ui.admin.UserDetailAdminActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/outfit_bold"
-        android:text="@string/appName"
-        android:textColor="@color/whitish"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_profile_user_admin" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="30dp"
+        android:padding="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/outfit_bold"
-            android:text="Register Now !"
-            android:textColor="@color/whitish"
-            android:textSize="28sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/outfit_regular"
-            android:text="Enter your details"
-            android:textColor="@color/whitish"
-            android:textSize="16sp" />
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
             android:fontFamily="@font/outfit_regular"
             android:textSize="16sp"
-            app:hintEnabled="false"
             app:boxBackgroundColor="@color/whitish"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:boxStrokeColor="@color/whitish"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_register_fullName"
+                android:id="@+id/ed_profile_fullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
@@ -79,8 +52,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:hintEnabled="false"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/outfit_regular"
             android:textSize="16sp"
             app:boxBackgroundColor="@color/whitish"
@@ -89,10 +61,11 @@
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:boxStrokeColor="@color/whitish"
-            app:endIconMode="clear_text">
+            app:endIconMode="clear_text"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_register_phoneNumber"
+                android:id="@+id/ed_profile_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
@@ -107,8 +80,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/outfit_regular"
             android:textSize="16sp"
             app:boxBackgroundColor="@color/whitish"
@@ -118,10 +90,11 @@
             app:boxCornerRadiusTopStart="10dp"
             app:boxStrokeColor="@color/whitish"
             app:endIconMode="clear_text"
+            app:hintEnabled="false"
             app:hintTextColor="@color/blackish">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_register_email"
+                android:id="@+id/ed_profile_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
@@ -136,8 +109,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/outfit_regular"
             android:textSize="16sp"
             app:boxBackgroundColor="@color/whitish"
@@ -146,115 +118,59 @@
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:boxStrokeColor="@color/whitish"
-            app:endIconMode="password_toggle"
+            app:endIconMode="clear_text"
+            app:hintEnabled="false"
             app:hintTextColor="@color/blackish">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_register_password"
+                android:id="@+id/ed_profile_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
                 android:hint="Password"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:textColor="@color/blackish"
                 android:textColorHint="@color/blackish" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/outfit_regular"
-            android:textSize="16sp"
-            app:boxBackgroundColor="@color/whitish"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
-            app:endIconMode="password_toggle"
-            app:hintTextColor="@color/blackish">
+    </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_register_confirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_regular"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:textColor="@color/blackish"
-                android:textColorHint="@color/blackish" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:id="@+id/Linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_update_data"
             style="@style/Button_Style_blue"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/blue"
             android:fontFamily="@font/outfit_bold"
-            android:text="Sign Up"
+            android:text="Update Data"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@color/whitish" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_bold"
-                android:text="OR"
-                android:textColor="@color/whitish"
-                android:textSize="24sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:background="@color/whitish" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_regular"
-                android:text="Have an account?"
-                android:textColor="@color/whitish" />
-
-            <TextView
-                android:id="@+id/btn_to_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_bold"
-                android:text=" Login"
-                android:textColor="@color/whitish" />
-        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_delete_data"
+            style="@style/Button_Style_red"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:fontFamily="@font/outfit_bold"
+            android:src="@drawable/baseline_delete_24"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -262,13 +178,13 @@
         android:id="@+id/progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        android:indeterminateTint="@color/blue"
         android:elevation="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/Linear1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
