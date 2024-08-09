@@ -1,10 +1,8 @@
-package com.sylva.sinema.ui.admin.user.detail
+package com.sylva.sinema.ui.admin.user
 
-import UserDetailPagerAdapter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
-import com.sylva.sinema.R
 import com.sylva.sinema.databinding.ActivityUserDetailAdminBinding
 
 class UserDetailAdminActivity : AppCompatActivity() {

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Sinema" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-         <item name="colorPrimary">@color/blackish</item>
+        <item name="colorPrimary">@color/blackish</item>
     </style>
 
     <style name="Theme.Sinema" parent="Base.Theme.Sinema" />

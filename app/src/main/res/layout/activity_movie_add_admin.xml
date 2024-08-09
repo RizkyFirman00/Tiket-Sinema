@@ -2,14 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.user.ProfileUserActivity">
+    tools:context=".ui.admin.movie.MovieAddAdminActivity">
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar_profile" />
+        layout="@layout/toolbar_movie_admin" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -21,10 +20,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_semibold"
+                android:text="Movie Poster"
+                android:textSize="16sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/whitish"
+                app:cardCornerRadius="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="12dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/add_image"
+                    app:riv_corner_radius="20dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_add_poster"
+                style="@style/Button_Style_blue"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/blue"
+                android:fontFamily="@font/outfit_bold"
+                android:text="Add Poster"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/outfit_regular"
             android:textSize="16sp"
             app:boxBackgroundColor="@color/whitish"
@@ -37,11 +87,11 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_profile_fullName"
+                android:id="@+id/ed_movieName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
-                android:hint="Full Name"
+                android:hint="Movie Name"
                 android:inputType="text"
                 android:textColor="@color/blackish"
                 android:textColorHint="@color/blackish" />
@@ -65,12 +115,12 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_profile_phoneNumber"
+                android:id="@+id/ed_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
-                android:hint="Phone Number"
-                android:inputType="number"
+                android:hint="Description"
+                android:inputType="text"
                 android:textColor="@color/blackish"
                 android:textColorHint="@color/black" />
 
@@ -94,70 +144,12 @@
             app:hintTextColor="@color/blackish">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_profile_email"
+                android:id="@+id/ed_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_regular"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/blackish"
-                android:textColorHint="@color/blackish" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/outfit_regular"
-            android:textSize="16sp"
-            app:boxBackgroundColor="@color/whitish"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeWidth="0dp"
-            app:endIconMode="password_toggle"
-            app:hintEnabled="false"
-            app:hintTextColor="@color/blackish">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_profile_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_regular"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/blackish"
-                android:textColorHint="@color/blackish" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/outfit_regular"
-            android:textSize="16sp"
-            app:boxBackgroundColor="@color/whitish"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeWidth="0dp"
-            app:endIconMode="password_toggle"
-            app:hintEnabled="false"
-            app:hintTextColor="@color/blackish">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_profile_confirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_regular"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
+                android:hint="Rating"
+                android:inputType="number"
                 android:textColor="@color/blackish"
                 android:textColorHint="@color/blackish" />
 
@@ -166,21 +158,22 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_update_data"
+        android:id="@+id/btn_add_movie"
         style="@style/Button_Style_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue"
-        android:fontFamily="@font/outfit_bold"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="30dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/outfit_bold"
         android:text="Update Data"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress_circular"
@@ -189,8 +182,8 @@
         android:elevation="8dp"
         android:indeterminate="true"
         android:indeterminateTint="@color/blue"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/btn_update_data"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_movie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

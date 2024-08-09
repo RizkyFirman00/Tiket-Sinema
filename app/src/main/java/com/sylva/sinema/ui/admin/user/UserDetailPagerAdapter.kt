@@ -1,9 +1,11 @@
+package com.sylva.sinema.ui.admin.user
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.sylva.sinema.ui.admin.user.detail.UserDetailFragment
-import com.sylva.sinema.ui.admin.user.detail.UserOrderFragment
+import com.sylva.sinema.ui.admin.user.order.UserOrderFragment
 
 class UserDetailPagerAdapter(
     activity: FragmentActivity,

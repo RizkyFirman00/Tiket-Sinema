@@ -1,4 +1,4 @@
-package com.sylva.sinema.adapter
+package com.sylva.sinema.adapter.admin
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

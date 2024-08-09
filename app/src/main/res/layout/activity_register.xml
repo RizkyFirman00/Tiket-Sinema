@@ -60,7 +60,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -88,7 +88,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -116,7 +116,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text"
             app:hintTextColor="@color/blackish">
 
@@ -145,7 +145,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="password_toggle"
             app:hintTextColor="@color/blackish">
 
@@ -174,7 +174,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="password_toggle"
             app:hintTextColor="@color/blackish">
 

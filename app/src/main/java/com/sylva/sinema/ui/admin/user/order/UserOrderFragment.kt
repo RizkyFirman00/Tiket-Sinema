@@ -1,5 +1,5 @@
 // UserOrderFragment.kt
-package com.sylva.sinema.ui.admin.user.detail
+package com.sylva.sinema.ui.admin.user.order
 
 import android.os.Bundle
 import android.view.LayoutInflater

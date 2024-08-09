@@ -11,18 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sylva.sinema.R
-import com.sylva.sinema.adapter.AdminUserAdapter
+import com.sylva.sinema.adapter.admin.AdminUserAdapter
 import com.sylva.sinema.databinding.FragmentUserBinding
 import com.sylva.sinema.model.User
-import com.sylva.sinema.ui.admin.user.detail.UserDetailAdminActivity
 
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
 
     private val db = Firebase.firestore
-    private val cakesCollection = db.collection("users")
+    private val usersCollection = db.collection("users")
 
     private lateinit var adminUserAdapter: AdminUserAdapter
     private var userList = mutableListOf<User>()
@@ -64,7 +62,7 @@ class UserFragment : Fragment() {
     }
 
     private fun fetchDataAndUpdateRecyclerView() {
-        cakesCollection.get()
+        usersCollection.get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val cakeData = document.toObject(User::class.java)

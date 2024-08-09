@@ -27,7 +27,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text"
             app:hintEnabled="false">
 
@@ -55,7 +55,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text"
             app:hintEnabled="false">
 
@@ -83,7 +83,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text"
             app:hintEnabled="false"
             app:hintTextColor="@color/blackish">
@@ -112,7 +112,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/whitish"
+            app:boxStrokeWidth="0dp"
             app:endIconMode="clear_text"
             app:hintEnabled="false"
             app:hintTextColor="@color/blackish">

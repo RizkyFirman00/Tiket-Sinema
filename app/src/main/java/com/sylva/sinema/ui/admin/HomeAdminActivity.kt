@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import com.sylva.sinema.R
 import com.sylva.sinema.databinding.ActivityHomeAdminBinding
 import com.sylva.sinema.ui.LoginActivity
+import com.sylva.sinema.ui.admin.cinema.CinemasFragment
+import com.sylva.sinema.ui.admin.movie.MoviesFragment
+import com.sylva.sinema.ui.admin.order.OrderFragment
 import com.sylva.sinema.ui.admin.user.UserFragment
 
 class HomeAdminActivity : AppCompatActivity() {
@@ -37,17 +40,17 @@ class HomeAdminActivity : AppCompatActivity() {
                 }
 
                 R.id.movies -> {
-//                    startActivity(Intent(this, MoviesActivity::class.java))
+                    replaceFragment(MoviesFragment())
                     true
                 }
 
                 R.id.cinemas -> {
-//                    startActivity(Intent(this, CinemasActivity::class.java))
+                    replaceFragment(CinemasFragment())
                     true
                 }
 
                 R.id.orders -> {
-//                    startActivity(Intent(this, TicketActivity::class.java))
+                    replaceFragment(OrderFragment())
                     true
                 }
 
