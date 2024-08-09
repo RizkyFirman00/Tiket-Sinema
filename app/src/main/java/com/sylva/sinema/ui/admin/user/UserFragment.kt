@@ -1,4 +1,4 @@
-package com.sylva.sinema.ui.admin
+package com.sylva.sinema.ui.admin.user
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.search.SearchBar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.sylva.sinema.R
 import com.sylva.sinema.adapter.AdminUserAdapter
 import com.sylva.sinema.databinding.FragmentUserBinding
 import com.sylva.sinema.model.User
+import com.sylva.sinema.ui.admin.user.detail.UserDetailAdminActivity
 
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
@@ -25,7 +25,6 @@ class UserFragment : Fragment() {
     private val cakesCollection = db.collection("users")
 
     private lateinit var adminUserAdapter: AdminUserAdapter
-    private lateinit var userEmail: String
     private var userList = mutableListOf<User>()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,7 +80,7 @@ class UserFragment : Fragment() {
     }
 
     private fun navigateToDetailDataActivity(userEmail: String) {
-        val intent = Intent(context, UserDetailAdminActivity::class.java)
+        val intent = Intent(requireContext(), UserDetailAdminActivity::class.java)
         intent.putExtra("User Email", userEmail)
         startActivity(intent)
     }

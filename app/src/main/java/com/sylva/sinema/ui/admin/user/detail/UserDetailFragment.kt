@@ -1,32 +1,34 @@
-package com.sylva.sinema.ui.admin
+package com.sylva.sinema.ui.admin.user.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.sylva.sinema.databinding.ActivityUserDetailAdminBinding
+import com.sylva.sinema.databinding.FragmentUserDetailBinding
 import com.sylva.sinema.model.User
 import com.sylva.sinema.utils.Preferences
 
-class UserDetailAdminActivity : AppCompatActivity() {
+class UserDetailFragment : Fragment() {
+    private var _binding: FragmentUserDetailBinding? = null
+    private val binding get() = _binding!!
+
     private val db = Firebase.firestore
     private val usersCollection = db.collection("users")
     private var originalUserData: Map<String, Any>? = null
-    private val binding by lazy { ActivityUserDetailAdminBinding.inflate(layoutInflater) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentUserDetailBinding.inflate(inflater, container, false)
 
-        binding.include.btnBack.setOnClickListener {
-            finish()
-        }
-
-        val userEmail = intent.getStringExtra("User Email")
+        val userEmail = arguments?.getString("User Email")
         if (userEmail != null) {
             getUserData(userEmail)
         }
@@ -38,26 +40,39 @@ class UserDetailAdminActivity : AppCompatActivity() {
             val password = binding.edProfilePassword.text.toString()
 
             if (email.isEmpty() || phoneNumber.isEmpty() || name.isEmpty()) {
-                Toast.makeText(this, "Harap isi semua kolom", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Harap isi semua kolom", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             originalUserData?.let { originalData ->
                 val isDataChanged = originalData["name"] != name ||
                         originalData["email"] != email ||
-                        originalData["phoneNumber"] != phoneNumber
+                        originalData["phoneNumber"] != phoneNumber ||
+                        originalData["password"] != password
 
                 if (!isDataChanged) {
-                    Toast.makeText(this, "Tidak ada data yang diubah", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Tidak ada data yang diubah", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
                 loadingProgress()
 
                 if (originalData["email"] != email) {
-                    updateUserEmail(originalData["email"].toString(), email, phoneNumber, name, password)
+                    updateUserEmail(
+                        originalData["email"].toString(),
+                        email,
+                        phoneNumber,
+                        name,
+                        password
+                    )
                 } else {
-                    updateUserData(originalData["email"].toString(), email, phoneNumber, name, password)
+                    updateUserData(
+                        originalData["email"].toString(),
+                        email,
+                        phoneNumber,
+                        name,
+                        password
+                    )
                 }
             }
         }
@@ -67,9 +82,11 @@ class UserDetailAdminActivity : AppCompatActivity() {
             if (email.isNotEmpty()) {
                 deleteUserData(email)
             } else {
-                Toast.makeText(this, "Email tidak valid", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Email tidak valid", Toast.LENGTH_SHORT).show()
             }
         }
+
+        return binding.root
     }
 
     private fun getUserData(email: String) {
@@ -118,19 +135,21 @@ class UserDetailAdminActivity : AppCompatActivity() {
         usersCollection.document(userId)
             .update(updatedUserData as Map<String, Any>)
             .addOnSuccessListener {
-                Toast.makeText(this, "Data pengguna berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Data pengguna berhasil diperbarui", Toast.LENGTH_SHORT)
+                    .show()
                 Preferences.saveUserInfo(
                     User(
                         name = newUsername,
                         email = email,
                         password = password,
                         phoneNumber = phoneNumber
-                    ), this
+                    ), requireContext()
                 )
-                Preferences.saveEmail(email, this)
+                Preferences.saveEmail(email, requireContext())
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Gagal memperbarui data pengguna", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Gagal memperbarui data pengguna", Toast.LENGTH_SHORT)
+                    .show()
                 Log.e("ProfileActivity", "Error updating user data", exception)
             }
             .addOnCompleteListener {
@@ -156,19 +175,27 @@ class UserDetailAdminActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 usersCollection.document(oldUserId).delete()
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Data pengguna berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "Data pengguna berhasil diperbarui",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         Preferences.saveUserInfo(
                             User(
                                 name = newUsername,
                                 email = newEmail,
                                 password = password,
                                 phoneNumber = phoneNumber
-                            ), this
+                            ), requireContext()
                         )
-                        Preferences.saveEmail(newEmail, this)
+                        Preferences.saveEmail(newEmail, requireContext())
                     }
                     .addOnFailureListener { exception ->
-                        Toast.makeText(this, "Gagal menghapus data pengguna lama", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "Gagal menghapus data pengguna lama",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         Log.e("ProfileActivity", "Error deleting old user data", exception)
                     }
                     .addOnCompleteListener {
@@ -176,7 +203,8 @@ class UserDetailAdminActivity : AppCompatActivity() {
                     }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Gagal memperbarui data pengguna", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Gagal memperbarui data pengguna", Toast.LENGTH_SHORT)
+                    .show()
                 Log.e("ProfileActivity", "Error updating user data", exception)
             }
             .addOnCompleteListener {
@@ -189,11 +217,11 @@ class UserDetailAdminActivity : AppCompatActivity() {
         usersCollection.document(email)
             .delete()
             .addOnSuccessListener {
-                Toast.makeText(this, "Data pengguna berhasil dihapus", Toast.LENGTH_SHORT).show()
-                finish()
+                Toast.makeText(context, "Data pengguna berhasil dihapus", Toast.LENGTH_SHORT).show()
+                requireActivity().finish()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Gagal menghapus data pengguna", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Gagal menghapus data pengguna", Toast.LENGTH_SHORT).show()
                 Log.e("UserDetailActivity", "Error deleting user data", exception)
             }
             .addOnCompleteListener {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".ui.admin.UserFragment">
+    tools:context=".ui.admin.user.UserFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"

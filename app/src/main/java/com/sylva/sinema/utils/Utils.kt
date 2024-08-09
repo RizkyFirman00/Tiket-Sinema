@@ -45,11 +45,7 @@ fun String.convertStringToLong(): Long {
 }
 
 fun Long.convertLongToString(): String {
-    // Menggunakan format ribuan dengan tanda koma
     val formattedString = String.format("%,d", this)
-
-    // Jika ingin menghilangkan tanda koma dan hanya mendapatkan angka, gunakan baris berikut:
-    // return formattedString.replace(",", "")
 
     return formattedString
 }
