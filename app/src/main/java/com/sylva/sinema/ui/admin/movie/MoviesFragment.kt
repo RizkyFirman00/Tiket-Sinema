@@ -24,14 +24,15 @@ class MoviesFragment : Fragment() {
 
     private lateinit var adminMovieAdapter: AdminMovieAdapter
     private var movieList = mutableListOf<Movie>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesBinding.inflate(inflater, container, false)
 
-        adminMovieAdapter = AdminMovieAdapter {
-            navigateToDetailDataActivity(it)
+        adminMovieAdapter = AdminMovieAdapter { movieId ->
+            navigateToDetailDataActivity(movieId)
         }
         binding.rvMovie.adapter = adminMovieAdapter
         binding.rvMovie.layoutManager = LinearLayoutManager(requireContext())
@@ -74,8 +75,8 @@ class MoviesFragment : Fragment() {
         moviesCollection.get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val cakeData = document.toObject(Movie::class.java)
-                    movieList.add(cakeData)
+                    val movieData = document.toObject(Movie::class.java)
+                    movieList.add(movieData)
                 }
                 adminMovieAdapter.submitList(movieList.toList())
                 adminMovieAdapter.sortDataByName()
@@ -86,9 +87,9 @@ class MoviesFragment : Fragment() {
             }
     }
 
-    private fun navigateToDetailDataActivity(movieName: String) {
+    private fun navigateToDetailDataActivity(movieId: String) {
         val intent = Intent(requireContext(), MovieDetailAdminActivity::class.java)
-        intent.putExtra("User Email", movieName)
+        intent.putExtra("Movie ID", movieId)
         startActivity(intent)
     }
 

@@ -30,7 +30,7 @@ class AdminMovieAdapter(private val onItemClick: (String) -> Unit) :
         fun bind(movie: Movie, onItemClick: (String) -> Unit) {
             binding.movieName.text = movie.movieName
             binding.root.setOnClickListener {
-                onItemClick(movie.movieName ?: "")
+                onItemClick(movie.movieId ?: "")
             }
         }
     }
@@ -42,7 +42,7 @@ class AdminMovieAdapter(private val onItemClick: (String) -> Unit) :
 
     private class DiffCallback : androidx.recyclerview.widget.DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.movieName == newItem.movieName
+            return oldItem.movieId == newItem.movieId
         }
 
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {

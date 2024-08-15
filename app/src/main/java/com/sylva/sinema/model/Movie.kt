@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Movie(
+    val movieId: String?= "",
     val movieName: String? = "",
     val description: String? = "",
     val rating: String? = "",
@@ -13,10 +14,12 @@ data class Movie(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readString(),
         parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(movieId)
         parcel.writeString(movieName)
         parcel.writeString(description)
         parcel.writeValue(rating)

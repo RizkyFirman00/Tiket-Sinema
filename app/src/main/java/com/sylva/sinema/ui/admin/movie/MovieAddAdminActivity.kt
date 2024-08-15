@@ -124,21 +124,27 @@ class MovieAddAdminActivity : AppCompatActivity() {
             "posterUrl" to posterUrl
         )
 
-        val documentId = movieName.replace("\\s".toRegex(), "_")
+        val newDocRef = firestore.collection("movies").document()
 
-        firestore.collection("movies")
-            .document(documentId)
-            .set(movieData)
+        newDocRef.set(movieData)
             .addOnSuccessListener {
-                unLoadingProgress()
-                Toast.makeText(this, "Movie added successfully", Toast.LENGTH_SHORT).show()
-                finish()
+                newDocRef.update("movieId", newDocRef.id)
+                    .addOnSuccessListener {
+                        unLoadingProgress()
+                        Toast.makeText(this, "Movie added successfully", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        unLoadingProgress()
+                        Toast.makeText(this, "Failed to update movieId", Toast.LENGTH_SHORT).show()
+                    }
             }
             .addOnFailureListener {
                 unLoadingProgress()
                 Toast.makeText(this, "Failed to add movie", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
     private fun loadingProgress() {

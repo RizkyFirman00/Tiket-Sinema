@@ -167,7 +167,7 @@
         android:layout_weight="1"
         android:backgroundTint="@color/blue"
         android:fontFamily="@font/outfit_bold"
-        android:text="Update Data"
+        android:text="Add Movie"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="24sp"

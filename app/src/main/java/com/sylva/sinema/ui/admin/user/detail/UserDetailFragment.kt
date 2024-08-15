@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -80,7 +81,7 @@ class UserDetailFragment : Fragment() {
         binding.btnDeleteData.setOnClickListener {
             val email = binding.edProfileEmail.text.toString()
             if (email.isNotEmpty()) {
-                deleteUserData(email)
+                showDeleteConfirmationDialog(email)
             } else {
                 Toast.makeText(context, "Email tidak valid", Toast.LENGTH_SHORT).show()
             }
@@ -112,6 +113,34 @@ class UserDetailFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 Log.e("UserData", "Error getting document", exception)
+            }
+            .addOnCompleteListener {
+                unLoadingProgress()
+            }
+    }
+
+    private fun showDeleteConfirmationDialog(email: String) {
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle("Hapus Pengguna")
+            setMessage("Apakah Anda yakin ingin menghapus pengguna ini?")
+            setPositiveButton("Ya") { _, _ ->
+                deleteUserData(email)
+            }
+            setNegativeButton("Tidak", null)
+        }.show()
+    }
+
+    private fun deleteUserData(email: String) {
+        loadingProgress()
+        usersCollection.document(email)
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Data pengguna berhasil dihapus", Toast.LENGTH_SHORT).show()
+                requireActivity().finish()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(context, "Gagal menghapus data pengguna", Toast.LENGTH_SHORT).show()
+                Log.e("UserDetailFragment", "Error deleting user data", exception)
             }
             .addOnCompleteListener {
                 unLoadingProgress()
@@ -212,23 +241,6 @@ class UserDetailFragment : Fragment() {
             }
     }
 
-    private fun deleteUserData(email: String) {
-        loadingProgress()
-        usersCollection.document(email)
-            .delete()
-            .addOnSuccessListener {
-                Toast.makeText(context, "Data pengguna berhasil dihapus", Toast.LENGTH_SHORT).show()
-                requireActivity().finish()
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(context, "Gagal menghapus data pengguna", Toast.LENGTH_SHORT).show()
-                Log.e("UserDetailActivity", "Error deleting user data", exception)
-            }
-            .addOnCompleteListener {
-                unLoadingProgress()
-            }
-    }
-
     private fun loadingProgress() {
         binding.apply {
             progressCircular.visibility = View.VISIBLE
@@ -251,5 +263,10 @@ class UserDetailFragment : Fragment() {
             btnDeleteData.isEnabled = true
             btnUpdateData.isEnabled = true
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
