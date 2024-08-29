@@ -65,8 +65,8 @@ class UserFragment : Fragment() {
         usersCollection.get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val cakeData = document.toObject(User::class.java)
-                    userList.add(cakeData)
+                    val userData = document.toObject(User::class.java)
+                    userList.add(userData)
                 }
                 adminUserAdapter.submitList(userList)
                 adminUserAdapter.sortDataByName()

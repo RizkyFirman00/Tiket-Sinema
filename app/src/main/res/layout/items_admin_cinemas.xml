@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_gravity="center"
+    android:outlineProvider="background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whitish"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/icon_user"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:contentDescription="LOCATION CINEMA"
+            android:src="@drawable/round_location_on_24" />
+
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/outfit_bold"
+            android:textColor="@color/black_gray"
+            android:textSize="18sp"
+            tools:text="Summarecon Mall Bekasi XXI" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

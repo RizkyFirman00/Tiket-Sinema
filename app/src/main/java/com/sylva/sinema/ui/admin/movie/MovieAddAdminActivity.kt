@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -19,8 +21,7 @@ import java.util.UUID
 class MovieAddAdminActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private val binding by lazy { ActivityMovieAddAdminBinding.inflate(layoutInflater) }
-    private val storageReference by lazy { FirebaseStorage.getInstance().reference }
-    private val firestore by lazy { FirebaseFirestore.getInstance() }
+    private val movieViewModel: MovieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +36,34 @@ class MovieAddAdminActivity : AppCompatActivity() {
         }
 
         binding.btnAddMovie.setOnClickListener {
-            uploadMovieData()
+            val movieName = binding.edMovieName.text.toString().trim()
+            val description = binding.edDesc.text.toString().trim()
+            val selectedRating = binding.edRating.text.toString()
+            val duration = binding.edDuration.text.toString().toInt()
+
+            if (movieName.isEmpty() || description.isEmpty() || selectedRating.isEmpty() || selectedImageUri == null) {
+                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            loadingProgress()
+            movieViewModel.uploadMovieData(
+                movieName,
+                description,
+                selectedRating,
+                duration,
+                selectedImageUri
+            )
         }
 
+        // Observe the ViewModel status
+        movieViewModel.operationStatus.observe(this) { status ->
+            unLoadingProgress()
+            Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
+            if (status == "Movie added successfully") {
+                finish() // Close activity after successful addition
+            }
+        }
     }
 
     // Permission Function
@@ -87,64 +113,6 @@ class MovieAddAdminActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun uploadMovieData() {
-        val movieName = binding.edMovieName.text.toString().trim()
-        val description = binding.edDesc.text.toString().trim()
-        val rating = binding.edRating.text.toString().trim()
-
-        if (movieName.isEmpty() || description.isEmpty() || rating.isEmpty() || selectedImageUri == null) {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        loadingProgress()
-
-        val posterRef = storageReference.child("posters/$movieName")
-
-        selectedImageUri?.let { uri ->
-            posterRef.putFile(uri)
-                .addOnSuccessListener {
-                    posterRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                        saveMovieToFirestore(movieName, description, rating, downloadUrl.toString())
-                    }
-                }
-                .addOnFailureListener {
-                    unLoadingProgress()
-                    Toast.makeText(this, "Image upload failed", Toast.LENGTH_SHORT).show()
-                }
-        }
-    }
-
-    private fun saveMovieToFirestore(movieName: String, description: String, rating: String, posterUrl: String) {
-        val movieData = hashMapOf(
-            "movieName" to movieName,
-            "description" to description,
-            "rating" to rating,
-            "posterUrl" to posterUrl
-        )
-
-        val newDocRef = firestore.collection("movies").document()
-
-        newDocRef.set(movieData)
-            .addOnSuccessListener {
-                newDocRef.update("movieId", newDocRef.id)
-                    .addOnSuccessListener {
-                        unLoadingProgress()
-                        Toast.makeText(this, "Movie added successfully", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        unLoadingProgress()
-                        Toast.makeText(this, "Failed to update movieId", Toast.LENGTH_SHORT).show()
-                    }
-            }
-            .addOnFailureListener {
-                unLoadingProgress()
-                Toast.makeText(this, "Failed to add movie", Toast.LENGTH_SHORT).show()
-            }
-    }
-
 
 
     private fun loadingProgress() {

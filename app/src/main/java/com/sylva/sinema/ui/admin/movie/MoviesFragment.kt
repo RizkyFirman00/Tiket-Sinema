@@ -7,47 +7,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.sylva.sinema.adapter.admin.AdminMovieAdapter
 import com.sylva.sinema.databinding.FragmentMoviesBinding
-import com.sylva.sinema.model.Movie
 
 class MoviesFragment : Fragment() {
-    private var _binding: FragmentMoviesBinding? = null
-    private val binding get() = _binding!!
 
-    private val db = Firebase.firestore
-    private val moviesCollection = db.collection("movies")
-
+    private val viewModel: MovieViewModel by viewModels()
     private lateinit var adminMovieAdapter: AdminMovieAdapter
-    private var movieList = mutableListOf<Movie>()
+
+    private val getResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                viewModel.fetchMovies()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        val binding = FragmentMoviesBinding.inflate(inflater, container, false)
 
         adminMovieAdapter = AdminMovieAdapter { movieId ->
             navigateToDetailDataActivity(movieId)
         }
         binding.rvMovie.adapter = adminMovieAdapter
         binding.rvMovie.layoutManager = LinearLayoutManager(requireContext())
-        fetchDataAndUpdateRecyclerView()
+
+        // Observe LiveData from ViewModel
+        viewModel.movieList.observe(viewLifecycleOwner) { movies ->
+            adminMovieAdapter.submitList(movies)
+        }
+
+        // Fetch movies initially
+        viewModel.fetchMovies()
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = true
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null && newText.isNotEmpty()) {
                     adminMovieAdapter.filter.filter(newText)
                 } else {
-                    adminMovieAdapter.submitList(movieList)
+                    viewModel.movieList.value?.let { adminMovieAdapter.submitList(it) }
                 }
                 return true
             }
@@ -59,42 +66,21 @@ class MoviesFragment : Fragment() {
         }
 
         binding.addData.setOnClickListener {
-            startActivity(Intent(requireContext(), MovieAddAdminActivity::class.java))
+            getResult.launch(Intent(requireContext(), MovieAddAdminActivity::class.java))
         }
 
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        fetchDataAndUpdateRecyclerView()
-    }
-
-    private fun fetchDataAndUpdateRecyclerView() {
-        movieList.clear()
-        moviesCollection.get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val movieData = document.toObject(Movie::class.java)
-                    movieList.add(movieData)
-                }
-                adminMovieAdapter.submitList(movieList.toList())
-                adminMovieAdapter.sortDataByName()
-                Log.d("AdminActivity", "Fetched data: $movieList")
-            }
-            .addOnFailureListener { exception ->
-                Log.e("AdminActivity", "Error fetching data", exception)
-            }
-    }
-
     private fun navigateToDetailDataActivity(movieId: String) {
         val intent = Intent(requireContext(), MovieDetailAdminActivity::class.java)
         intent.putExtra("Movie ID", movieId)
-        startActivity(intent)
+        getResult.launch(intent)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchMovies()
     }
 }
+

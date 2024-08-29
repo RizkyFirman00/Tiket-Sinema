@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/black_gray"
+        android:backgroundTint="@color/blue"
         android:clickable="true"
         app:tint="@color/whitish"
         android:src="@drawable/rounded_add_24"

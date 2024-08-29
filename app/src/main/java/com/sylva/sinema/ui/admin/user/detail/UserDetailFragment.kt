@@ -121,8 +121,8 @@ class UserDetailFragment : Fragment() {
 
     private fun showDeleteConfirmationDialog(email: String) {
         AlertDialog.Builder(requireContext()).apply {
-            setTitle("Hapus Pengguna")
-            setMessage("Apakah Anda yakin ingin menghapus pengguna ini?")
+            setTitle("Delete User")
+            setMessage("Are you sure you want to delete this User?")
             setPositiveButton("Ya") { _, _ ->
                 deleteUserData(email)
             }
